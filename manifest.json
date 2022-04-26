@@ -1,0 +1,10 @@
+{
+  "id": "colab-sidian",
+  "name": "ColabSidian",
+  "version": "1.0.1",
+  "minAppVersion": "0.13.0",
+  "description": "This Plugin allows you to sync vaults between multiple instances by connecting to a sync-server",
+  "author": "peter schweitzer",
+  "authorUrl": "https://github.com/peter-schweitzer",
+  "isDesktopOnly": true
+}
