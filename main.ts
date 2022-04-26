@@ -12,3 +12,12 @@ import {
   TFile,
 } from "obsidian";
 import CodeMirror from "codemirror";
+
+export default class ColabSidian extends Plugin {
+  async onload() {
+
+  }
+
+  onunload() {}
+
+}
