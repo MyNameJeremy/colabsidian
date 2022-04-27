@@ -72,6 +72,13 @@ export default class ColabSidian extends Plugin {
     this.registerCodeMirror((cm) => {
       cm.on("change", async (cm_, e) => {
         switch (e.origin) {
+          case "+input":
+            await this.send_t_add(e, this.app.workspace.getActiveFile().path);
+            break;
+          case "+delete":
+            await this.send_t_rm(e, this.app.workspace.getActiveFile().path);
+            break;
+
           default:
             console.log(e);
             break;
