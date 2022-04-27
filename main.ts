@@ -69,6 +69,15 @@ export default class ColabSidian extends Plugin {
       })
     );
 
+    this.registerCodeMirror((cm) => {
+      cm.on("change", async (cm_, e) => {
+        switch (e.origin) {
+          default:
+            console.log(e);
+            break;
+        }
+      });
+    });
   }
 
   onunload() {}
