@@ -79,6 +79,12 @@ export default class ColabSidian extends Plugin {
             await this.send_t_rm(e, this.app.workspace.getActiveFile().path);
             break;
 
+          case "paste":
+          case "setValue":
+            await this.send_t_rm(e, this.app.workspace.getActiveFile().path);
+            await this.send_t_add(e, this.app.workspace.getActiveFile().path);
+            break;
+
           default:
             console.log(e);
             break;
