@@ -52,12 +52,45 @@ export default class ColabSidian extends Plugin {
 
   onunload() {}
 
+  pos_helper(pos: CodeMirror.Position) {
+    return { l: pos.line, c: pos.sticky == "before" ? pos.ch - 1 : pos.ch };
+  }
+
   async send(payload: object) {
     if (!this.ws || !this.ws.OPEN) return console.log("abort send", payload);
     let pl = JSON.stringify(payload);
     console.log(`sending '${pl}' to Sync-Server`);
     this.ws.send(pl, (err) => {
       if (err) console.error(err.message);
+    });
+  }
+
+  async send_f_d(f: TAbstractFile, type: string) {
+    this.send({
+      type: (f instanceof TFile ? "f" : "d") + type,
+      payload: { path: f.path },
+    });
+  }
+
+  async send_t_rm(e: CodeMirror.EditorChangeLinkedList, pth: string) {
+    await this.send({
+      type: "t-",
+      payload: {
+        path: pth,
+        from: this.pos_helper(e.from),
+        to: this.pos_helper(e.to),
+      },
+    });
+  }
+
+  async send_t_add(e: CodeMirror.EditorChangeLinkedList, pth: string) {
+    await this.send({
+      type: "t+",
+      payload: {
+        path: pth,
+        pos: this.pos_helper(e.from),
+        text: e.text.join("\n"),
+      },
     });
   }
 
