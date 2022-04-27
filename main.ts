@@ -48,6 +48,27 @@ export default class ColabSidian extends Plugin {
 
     ribbonIconEl.addClass("colab-sidian-ribbon-ico-class");
 
+    // If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
+    // Using this function will automatically remove the event listener when this plugin is disabled.
+    //this.registerEvent();
+    this.registerEvent(
+      this.app.vault.on("create", (f) => {
+        this.send_f_d(f, "+");
+      })
+    );
+
+    this.registerEvent(
+      this.app.vault.on("delete", (f) => {
+        this.send_f_d(f, "-");
+      })
+    );
+
+    this.registerEvent(
+      this.app.vault.on("rename", (f, _) => {
+        this.send_f_d(f, ">");
+      })
+    );
+
   }
 
   onunload() {}
