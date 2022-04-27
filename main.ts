@@ -79,6 +79,12 @@ export default class ColabSidian extends Plugin {
             await this.send_t_rm(e, this.app.workspace.getActiveFile().path);
             break;
 
+          case "undo":
+          case "redo":
+            console.log("undo & redo NYI", e);
+            //await this.send_t_rm(e, this.app.workspace.getActiveFile().path);
+            break;
+
           case "paste":
           case "setValue":
             await this.send_t_rm(e, this.app.workspace.getActiveFile().path);
@@ -151,6 +157,12 @@ export default class ColabSidian extends Plugin {
       switch (type[0]) {
         case "p":
           return this.ws.send('{"type": "p"}');
+        case "s":
+          break;
+        case "d":
+        case "f":
+        case "t":
+          break;
         default:
           this.ws_enable = false;
       }
