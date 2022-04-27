@@ -26,6 +26,9 @@ const DEFAULT_SETTINGS: ColabSidianSettings = {
 export default class ColabSidian extends Plugin {
   settings: ColabSidianSettings;
   basePath = (this.app.vault.adapter as FileSystemAdapter).getBasePath();
+  ws: WebSocket;
+  ws_enable = false;
+
   async onload() {
     await this.loadSettings();
 
@@ -34,6 +37,41 @@ export default class ColabSidian extends Plugin {
   }
 
   onunload() {}
+
+  async send(payload: object) {
+    if (!this.ws || !this.ws.OPEN) return console.log("abort send", payload);
+    let pl = JSON.stringify(payload);
+    console.log(`sending '${pl}' to Sync-Server`);
+    this.ws.send(pl, (err) => {
+      if (err) console.error(err.message);
+    });
+  }
+
+  async connectToSyncServer() {
+    if (!!this.ws && this.ws.OPEN) this.ws.close();
+    if (!this.ws_enable) return; //don't reconnect when ws is disabeled
+
+    this.ws = new WebSocket(`ws://${this.settings.ip}:${this.settings.port}`);
+
+    this.ws.on("message", (msg) => {
+      let { type, payload } = JSON.parse(String(msg));
+
+      if (!type) this.ws_enable = false;
+
+      switch (type[0]) {
+        case "p":
+          return this.ws.send('{"type": "p"}');
+        default:
+          this.ws_enable = false;
+      }
+    });
+
+    this.ws.on("open", () => {
+      console.log(
+        `connected to ${this.settings.ip}, on port ${this.settings.port}`
+      );
+    });
+  }
 
   async loadSettings() {
     let data = String(readFileSync(`${this.basePath}/data.json`));
