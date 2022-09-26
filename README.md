@@ -1,4 +1,4 @@
-# ColaSidian - Colaborative Obsidian Plugin
+# ColabSidian - Colaborative Obsidian Plugin
 
 ## Index
 
