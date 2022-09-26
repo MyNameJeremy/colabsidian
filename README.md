@@ -7,7 +7,7 @@
 
 ## Install
 
-> After disabeling safe-mode in Obsidian, copy this repos contents to your `.obsidian/plugins` folder and reload obsidian
+> After disabeling safe-mode in Obsidian, copy this repos contents to your `.obsidian/plugins` folder and reload obsidian.
 
 ## Setup
 
