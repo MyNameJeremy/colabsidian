@@ -11,6 +11,6 @@
 
 ## Setup
 
-> after [installing](#install) colab-sidian you'l be able to configure the **ip** and **port** of the sync server
+> After [installing](#install) colab-sidian, you'll be able to configure the **ip** and **port** of the sync server.
 >
-> the default port is `4404`, but you might change it to something else (see 'Setup' of colab-sidian-sync-server)
+> The default port is `4404`, but you might change it to something else (see 'Setup' of colab-sidian-sync-server).
